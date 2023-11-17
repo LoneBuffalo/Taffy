@@ -1045,6 +1045,10 @@
 				<cfif listLen(tmp, ";") gt 1>
 					<cfset tmp = listFirst(tmp, ";") />
 				</cfif>
+				<!--- don't allow html mime in Accept header.  Must use extension explicitly to get HTML response --->
+        <cfif trim(tmp) eq "text/html">
+          <cfset tmp = "*/*" />
+        </cfif>
 				<cfif structKeyExists(application._taffy.settings.mimeTypes, tmp)>
 					<cfset local.returnData["_taffy_mime"] = application._taffy.settings.mimeTypes[tmp] />
 					<cfset local.headerMatch = true />
